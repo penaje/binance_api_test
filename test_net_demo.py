@@ -45,6 +45,16 @@ class TradeBot:
         self._last_btc_price = self._client.get_symbol_ticker(symbol='BTCUSDT')['price']
         print(self._last_btc_price)
 
+    def get_balance_of(self, asset_name):
+        """Returns the balance of the specified asset"""
+        asset = asset_name + "USDT"
+        return self._client.get_asset_balance(asset=asset_name)['free']
+
+    def get_price_of(self, asset_name):
+        """Returns the latest price of the requested asset"""
+        asset = asset_name + "USDT"
+        return self._client.get_symbol_ticker(symbol=asset)['price']
+
 
 bot_1 = TradeBot()
 bot_1.set_keys(api_public, api_secret)
@@ -53,4 +63,6 @@ bot_1.update_btc_balance()
 bot_1.get_current_btc_price()
 
 balance = bot_1.get_btc_balance()
-print("Balance", balance, '\n')
+print("Bot_1's current BTC Balance is", balance, '\n')
+print('Bot_1s balance of ETH is ', bot_1.get_balance_of('ETH'), '\n')
+print('The current price of ETH is ', bot_1.get_price_of('ETH'), '\n')
